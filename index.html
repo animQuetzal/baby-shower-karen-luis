@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <!-- Meta etiquetas para vista previa en WhatsApp y redes sociales -->
+    <title>Nuestro Baby Shower Karen y Luis</title>
+    <meta property="og:title" content="Nuestro Baby Shower Karen y Luis">
+    <meta property="og:description" content="¡Acompáñanos a celebrar la llegada de nuestro bebé!">
+    <meta property="og:type" content="website">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #d1f0ff;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        /* Contenedor principal ajustado estrictamente a pantalla móvil */
+        .mobile-container {
+            width: 100%;
+            max-width: 480px;
+            background-color: #ffffff;
+            position: relative;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        /* Bloques verticales sin margen */
+        .section-block {
+            width: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .media-content {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Posicionamiento del Contador en la zona roja de page_02.jpg */
+        .countdown-container {
+            position: absolute;
+            bottom: 3%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 86%;
+            display: flex;
+            justify-content: space-around;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 8px 12px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .time-box {
+            text-align: center;
+        }
+
+        .time-box span {
+            display: block;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #1a5b8c;
+        }
+
+        .time-box label {
+            font-size: 0.65rem;
+            color: #555;
+            text-transform: uppercase;
+        }
+
+        /* Posicionamiento del Botón de Ubicación en el listón naranja de page_03.jpg */
+        .map-button-container {
+            position: absolute;
+            top: 28%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70%;
+            text-align: center;
+        }
+
+        .btn-mapa {
+            display: inline-block;
+            width: 100%;
+            padding: 10px 15px;
+            background-color: #25d366;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 0.95rem;
+            text-decoration: none;
+            border-radius: 25px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+            transition: transform 0.2s ease;
+        }
+
+        .btn-mapa:active {
+            transform: scale(0.96);
+        }
+
+        /* Botón Flotante para Control de Música */
+        .music-btn {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #1a5b8c;
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Botón para encender/apagar música -->
+    <button class="music-btn" id="musicToggle" aria-label="Controlar Música">🎵</button>
+
+    <!-- Audio en segundo plano -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="mobile-container">
+        <!-- Bloque 1: Video de Intro -->
+        <div class="section-block">
+            <video class="media-content" autoplay loop muted playsinline>
+                <source src="intro.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <!-- Bloque 2: Imagen 2 con Contador -->
+        <div class="section-block">
+            <img src="page_02.jpg" alt="Detalles de la fecha" class="media-content">
+            <div class="countdown-container">
+                <div class="time-box"><span id="days">00</span><label>Días</label></div>
+                <div class="time-box"><span id="hours">00</span><label>Hs</label></div>
+                <div class="time-box"><span id="minutes">00</span><label>Min</label></div>
+                <div class="time-box"><span id="seconds">00</span><label>Seg</label></div>
+            </div>
+        </div>
+
+        <!-- Bloque 3: Imagen 3 con Botón a Google Maps -->
+        <div class="section-block">
+            <img src="page_03.jpg" alt="Ubicación del evento" class="media-content">
+            <div class="map-button-container">
+                <a href="https://maps.app.goo.gl/tfB6cWhbQ3h4vjSQA" target="_blank" rel="noopener noreferrer" class="btn-mapa">
+                    📍 CÓMO LLEGAR
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. Lógica del Contador hacia el 5 de Diciembre a las 3:00 PM
+        const targetDate = new Date('December 5, 2026 15:00:00').getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                document.getElementById('days').innerText = days < 10 ? '0' + days : days;
+                document.getElementById('hours').innerText = hours < 10 ? '0' + hours : hours;
+                document.getElementById('minutes').innerText = minutes < 10 ? '0' + minutes : minutes;
+                document.getElementById('seconds').innerText = seconds < 10 ? '0' + seconds : seconds;
+            } else {
+                document.getElementById('days').innerText = '00';
+                document.getElementById('hours').innerText = '00';
+                document.getElementById('minutes').innerText = '00';
+                document.getElementById('seconds').innerText = '00';
+            }
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // 2. Control de Audio (Inicio con la primera interacción del usuario)
+        const audio = document.getElementById('bgMusic');
+        const musicToggle = document.getElementById('musicToggle');
+        let isPlaying = false;
+
+        function startAudioOnFirstTouch() {
+            if (!isPlaying) {
+                audio.play().then(() => {
+                    isPlaying = true;
+                    musicToggle.innerText = '🎵';
+                }).catch(() => {});
+            }
+            document.removeEventListener('click', startAudioOnFirstTouch);
+            document.removeEventListener('touchstart', startAudioOnFirstTouch);
+        }
+
+        document.addEventListener('click', startAudioOnFirstTouch);
+        document.addEventListener('touchstart', startAudioOnFirstTouch);
+
+        musicToggle.addEventListener('click', (e) => {
+            e.stopPropagation(); // Evita conflicto con el evento de toque global
+            if (isPlaying) {
+                audio.pause();
+                musicToggle.innerText = '🔇';
+                isPlaying = false;
+            } else {
+                audio.play();
+                musicToggle.innerText = '🎵';
+                isPlaying = true;
+            }
+        });
+    </script>
+</body>
+</html>
