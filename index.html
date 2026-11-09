@@ -26,7 +26,7 @@
             min-height: 100vh;
         }
 
-        /* Contenedor principal ajustado estrictamente a pantalla móvil */
+        /* Contenedor principal ajustado a pantalla móvil */
         .mobile-container {
             width: 100%;
             max-width: 480px;
@@ -50,7 +50,7 @@
             display: block;
         }
 
-        /* Posicionamiento del Contador en la zona roja de page_02.jpg */
+        /* Posicionamiento del Contador en la zona roja de page_02.png */
         .countdown-container {
             position: absolute;
             bottom: 3%;
@@ -82,7 +82,7 @@
             text-transform: uppercase;
         }
 
-        /* Posicionamiento del Botón de Ubicación en el listón naranja de page_03.jpg */
+        /* Posicionamiento del Botón de Ubicación en el listón naranja de page_03.png */
         .map-button-container {
             position: absolute;
             top: 28%;
@@ -92,11 +92,21 @@
             text-align: center;
         }
 
-        .btn-mapa {
+        /* Posicionamiento del Botón de Confirmación en la parte inferior de page_03.png */
+        .rsvp-button-container {
+            position: absolute;
+            bottom: 4%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 75%;
+            text-align: center;
+        }
+
+        /* Estilos generales para botones */
+        .btn-action {
             display: inline-block;
             width: 100%;
             padding: 10px 15px;
-            background-color: #25d366;
             color: #ffffff;
             font-weight: bold;
             font-size: 0.95rem;
@@ -106,7 +116,15 @@
             transition: transform 0.2s ease;
         }
 
-        .btn-mapa:active {
+        .btn-mapa {
+            background-color: #25d366;
+        }
+
+        .btn-rsvp {
+            background-color: #1a5b8c;
+        }
+
+        .btn-action:active {
             transform: scale(0.96);
         }
 
@@ -159,12 +177,21 @@
             </div>
         </div>
 
-        <!-- Bloque 3: Imagen 3 con Botón a Google Maps -->
+        <!-- Bloque 3: Imagen 3 con Botón de Google Maps y WhatsApp -->
         <div class="section-block">
             <img src="page_03.png" alt="Ubicación del evento" class="media-content">
+            
+            <!-- Botón Cómo Llegar -->
             <div class="map-button-container">
-                <a href="https://maps.app.goo.gl/tfB6cWhbQ3h4vjSQA" target="_blank" rel="noopener noreferrer" class="btn-mapa">
+                <a href="https://maps.app.goo.gl/tfB6cWhbQ3h4vjSQA" target="_blank" rel="noopener noreferrer" class="btn-action btn-mapa">
                     📍 CÓMO LLEGAR
+                </a>
+            </div>
+
+            <!-- Botón Confirmar Asistencia -->
+            <div class="rsvp-button-container">
+                <a href="https://wa.me/5215527150458?text=%C2%A1Hola!%20Quiero%20confirmar%20mi%20asistencia%20al%20Baby%20Shower%20de%20Karen%20y%20Luis%20%F0%9F%90%BC%F0%9F%8D%BC" target="_blank" rel="noopener noreferrer" class="btn-action btn-rsvp">
+                    💬 CONFIRMAR ASISTENCIA
                 </a>
             </div>
         </div>
@@ -198,7 +225,7 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        // 2. Control de Audio (Inicio con la primera interacción del usuario)
+        // 2. Control de Audio
         const audio = document.getElementById('bgMusic');
         const musicToggle = document.getElementById('musicToggle');
         let isPlaying = false;
@@ -218,7 +245,7 @@
         document.addEventListener('touchstart', startAudioOnFirstTouch);
 
         musicToggle.addEventListener('click', (e) => {
-            e.stopPropagation(); // Evita conflicto con el evento de toque global
+            e.stopPropagation();
             if (isPlaying) {
                 audio.pause();
                 musicToggle.innerText = '🔇';
